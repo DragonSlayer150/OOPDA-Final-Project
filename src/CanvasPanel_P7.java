@@ -45,7 +45,11 @@ public class CanvasPanel_P7 extends JPanel
 
         shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
         shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth() - 25, (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
-        shapesList.add(new Circle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2, 10));
+        shapesList.add(new Circle2D(Shape2D.RED, CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2, 10));
+
+
+        shapesList.get(ball).SetSpeed(5, 0);
+
         // Create a render loop
         // Create a Swing Timer that will tick 30 times a second
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
@@ -56,12 +60,22 @@ public class CanvasPanel_P7 extends JPanel
 
     public void Simulate() {
         if (action) {
-            Shape2D shape = null;
+            Shape2D ball = shapesList.get(this.ball);
+            Shape2D leftPaddle = shapesList.get(this.leftPaddle);
+            Shape2D rightPaddle = shapesList.get(this.rightPaddle);
 
-            shape = shapesList.get(ball);
 
-            shape.SetSpeed(5, 0);
-            shape.Animate();
+
+
+            if (paddleCollision(ball, rightPaddle)) {
+                ball.SetSpeed(-5,0);
+            }
+
+            if (paddleCollision(ball, leftPaddle)) {
+                ball.SetSpeed(5, 0);
+            }
+
+            ball.Animate();
 
 
         }
@@ -119,6 +133,19 @@ public class CanvasPanel_P7 extends JPanel
         return ballXPos > CanvasPanel_P7.getCanvasWidth() || ballXPos < CanvasPanel_P7.getCanvasXBorder();
     }
 
+    private static boolean paddleCollision(Shape2D circle, Shape2D rectangle) {
+        Circle2D ball = (Circle2D) circle;
+        Rectangle2D paddle = (Rectangle2D) rectangle;
+
+
+        int ballLeftBoundary = ball.GetX();
+        int ballRightBoundary = ball.GetX() + (ball.GetDiameter());
+
+        int paddleLeftBoundary = paddle.GetX();
+        int paddleRightBoundary = paddle.GetX() + paddle.GetWidth();
+
+        return !(ballLeftBoundary > paddleRightBoundary || ballRightBoundary < paddleLeftBoundary);
+    }
 
     public class myActionListener extends KeyAdapter {
         public void keyPressed(KeyEvent e)

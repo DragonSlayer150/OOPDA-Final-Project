@@ -33,6 +33,10 @@ public class Rectangle2D extends Shape2D{
         this.width = width;
     }
 
+    public int GetWidth() {
+        return width;
+    }
+
     /**
      * public void Draw(Graphics g)
      *
