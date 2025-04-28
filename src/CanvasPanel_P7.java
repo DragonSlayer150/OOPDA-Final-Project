@@ -10,11 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
-// For Sprites
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class CanvasPanel_P7 extends JPanel
 {
@@ -32,11 +27,10 @@ public class CanvasPanel_P7 extends JPanel
     private boolean rightPaddleDown;
 
     private int     frameNumber;
-    private int     time;
 
-    private int     leftPaddle = 0;
-    private int     rightPaddle = 1;
-    private int     ball = 2;
+    private final int     leftPaddle = 0;
+    private final int     rightPaddle = 1;
+    private final int     ball = 2;
 
     public CanvasPanel_P7() {
         shapesList = new ArrayList<>();
@@ -56,14 +50,13 @@ public class CanvasPanel_P7 extends JPanel
         // Create a render loop
         // Create a Swing Timer that will tick 30 times a second
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
-        time = 0;
         Timer renderLoop = new Timer(30, (ActionEvent ev) -> {frameNumber++; Simulate(); repaint();}); // lambda expression for ActionListener implements actionPerformed
         renderLoop.start();
     }
 
     public void Simulate() {
         if (action) {
-            Shape2D ball = shapesList.get(this.ball);
+            Circle2D ball = (Circle2D) shapesList.get(this.ball);
             Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(this.leftPaddle);
             Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(this.rightPaddle);
 
@@ -94,6 +87,10 @@ public class CanvasPanel_P7 extends JPanel
 
             if (rightPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(-5,0);
+            }
+
+            if (ballOutOfBounds(ball)) {
+                ball.SetPos(CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2);
             }
 
             ball.Animate();
@@ -151,10 +148,8 @@ public class CanvasPanel_P7 extends JPanel
 
     private static boolean ballOutOfBounds(Circle2D ball) {
         int ballXPos = ball.GetX();
-        return ballXPos > CanvasPanel_P7.getCanvasWidth() || ballXPos < CanvasPanel_P7.getCanvasXBorder();
+        return ballXPos > (CanvasPanel_P7.getCanvasWidth() + 50) || ballXPos < (CanvasPanel_P7.getCanvasXBorder() - 50);
     }
-
-
 
     public class myActionListener extends KeyAdapter {
         public void keyPressed(KeyEvent e)
