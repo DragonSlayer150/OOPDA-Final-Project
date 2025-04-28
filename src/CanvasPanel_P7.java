@@ -26,8 +26,11 @@ public class CanvasPanel_P7 extends JPanel
 
     List<Shape2D>   shapesList;
     boolean         action;
-    private boolean jumpUp;    // for Sprite
-    private boolean fallDown;  // for Sprite
+    private boolean leftPaddleUp;
+    private boolean leftPaddleDown;
+    private boolean rightPaddleUp;
+    private boolean rightPaddleDown;
+
     private int     frameNumber;
     private int     time;
 
@@ -61,18 +64,36 @@ public class CanvasPanel_P7 extends JPanel
     public void Simulate() {
         if (action) {
             Shape2D ball = shapesList.get(this.ball);
-            Shape2D leftPaddle = shapesList.get(this.leftPaddle);
-            Shape2D rightPaddle = shapesList.get(this.rightPaddle);
+            Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(this.leftPaddle);
+            Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(this.rightPaddle);
 
 
-
-
-            if (paddleCollision(ball, rightPaddle)) {
-                ball.SetSpeed(-5,0);
+            if (leftPaddleDown) {
+                leftPaddle.SetSpeed(0, 5);
+                leftPaddle.Animate();
             }
 
-            if (paddleCollision(ball, leftPaddle)) {
+            if (leftPaddleUp) {
+                leftPaddle.SetSpeed(0, -5);
+                leftPaddle.Animate();
+            }
+
+            if (rightPaddleDown) {
+                rightPaddle.SetSpeed(0, 5);
+                rightPaddle.Animate();
+            }
+
+            if (rightPaddleUp) {
+                rightPaddle.SetSpeed(0, -5);
+                rightPaddle.Animate();
+            }
+
+            if (leftPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(5, 0);
+            }
+
+            if (rightPaddle.paddleCollision(ball)) {
+                ball.SetSpeed(-5,0);
             }
 
             ball.Animate();
@@ -133,19 +154,7 @@ public class CanvasPanel_P7 extends JPanel
         return ballXPos > CanvasPanel_P7.getCanvasWidth() || ballXPos < CanvasPanel_P7.getCanvasXBorder();
     }
 
-    private static boolean paddleCollision(Shape2D circle, Shape2D rectangle) {
-        Circle2D ball = (Circle2D) circle;
-        Rectangle2D paddle = (Rectangle2D) rectangle;
 
-
-        int ballLeftBoundary = ball.GetX();
-        int ballRightBoundary = ball.GetX() + (ball.GetDiameter());
-
-        int paddleLeftBoundary = paddle.GetX();
-        int paddleRightBoundary = paddle.GetX() + paddle.GetWidth();
-
-        return !(ballLeftBoundary > paddleRightBoundary || ballRightBoundary < paddleLeftBoundary);
-    }
 
     public class myActionListener extends KeyAdapter {
         public void keyPressed(KeyEvent e)
@@ -153,10 +162,10 @@ public class CanvasPanel_P7 extends JPanel
             switch (e.getKeyCode())
             {
                 case KeyEvent.VK_UP:
-
+                    rightPaddleUp = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    System.out.println("press down arrow");
+                    rightPaddleDown = true;
                     break;
                 case KeyEvent.VK_LEFT:
                     System.out.println("press left arrow");
@@ -168,8 +177,11 @@ public class CanvasPanel_P7 extends JPanel
                     action = true;
                     break;
                 case KeyEvent.VK_S:
-                    action = false;
+                        leftPaddleDown = true;
                     break;
+                case KeyEvent.VK_W:
+                        leftPaddleUp = true;
+                        break;
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
@@ -177,7 +189,19 @@ public class CanvasPanel_P7 extends JPanel
 
         public void keyReleased(KeyEvent e)
         {
-            //System.out.println("released");
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_S:
+                    leftPaddleDown = false;
+                    break;
+                case KeyEvent.VK_W:
+                    leftPaddleUp = false;
+                    break;
+                case KeyEvent.VK_UP:
+                    rightPaddleUp = false;
+                case KeyEvent.VK_DOWN:
+                    rightPaddleDown = false;
+                default:
+            }
         }
     }
 }

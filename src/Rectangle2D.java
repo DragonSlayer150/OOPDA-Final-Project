@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class Rectangle2D extends Shape2D{
     private int width;
-    private int length;
+    private int height;
 
     /**
      * Constructor for objects of class Rectangle2D
@@ -16,7 +16,7 @@ public class Rectangle2D extends Shape2D{
     public Rectangle2D() {
         super(Shape2D.GREEN, 0, 0);
         this.width = 40;
-        this.length = 40;
+        this.height = 40;
     }
 
     /**
@@ -29,13 +29,35 @@ public class Rectangle2D extends Shape2D{
      */
     public Rectangle2D(int fillColorIndex, int xPosition, int yPosition, int width, int length) {
         super(fillColorIndex, xPosition, yPosition);
-        this.length = length;
+        this.height = length;
         this.width = width;
     }
 
     public int GetWidth() {
         return width;
     }
+    public int GetHeight() {
+        return height;
+    }
+
+    public boolean paddleCollision(Shape2D circle) {
+        Circle2D ball = (Circle2D) circle;
+
+        int ballLeftBoundary = ball.GetX();
+        int ballRightBoundary = ball.GetX() + ball.GetDiameter();
+        int ballTopBoundary = ball.GetY();
+        int ballBottomBoundary = ball.GetY() + ball.GetDiameter();
+
+
+        int paddleLeftBoundary = this.GetX();
+        int paddleRightBoundary = this.GetX() + this.width;
+        int paddleTopBoundary = this.GetY();
+        int paddleBottomBoundary = this.GetY() + this.height;
+
+
+        return !(ballLeftBoundary > paddleRightBoundary || ballRightBoundary < paddleLeftBoundary) && !(ballTopBoundary > paddleBottomBoundary || ballBottomBoundary < paddleTopBoundary);
+    }
+
 
     /**
      * public void Draw(Graphics g)
@@ -47,11 +69,11 @@ public class Rectangle2D extends Shape2D{
     @Override
     public void Draw(Graphics g) {
         g.setColor(super.GetFillColor());
-        g.fillRect(super.GetX(), super.GetY(), this.width, this.length);
+        g.fillRect(super.GetX(), super.GetY(), this.width, this.height);
 
         if(super.hasOutline()) {
             g.setColor(super.GetOutlineColor());
-            g.drawRect(super.GetX(), super.GetY(), this.width, this.length);
+            g.drawRect(super.GetX(), super.GetY(), this.width, this.height);
         }
     }
 }
