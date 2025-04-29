@@ -25,6 +25,12 @@ public class Circle2D extends Shape2D {
         this.diameter       = diameter;
     }
 
+    public int GetDiameter() {
+        return diameter;
+    }
+
+
+
     /**
      * public void Draw(Graphics g)
      *
