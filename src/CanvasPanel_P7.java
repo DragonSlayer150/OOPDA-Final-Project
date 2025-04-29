@@ -45,7 +45,7 @@ public class CanvasPanel_P7 extends JPanel
         shapesList.add(new Circle2D(Shape2D.RED, CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2, 10));
 
 
-        shapesList.get(ball).SetSpeed(5, 0);
+        shapesList.get(ball).SetSpeed(5, 5);
 
         // Create a render loop
         // Create a Swing Timer that will tick 30 times a second
@@ -82,12 +82,24 @@ public class CanvasPanel_P7 extends JPanel
             }
 
             if (leftPaddle.paddleCollision(ball)) {
-                ball.SetSpeed(5, 0);
+                ball.SetSpeed(5, ball.GetYVel());
+
+
             }
 
             if (rightPaddle.paddleCollision(ball)) {
-                ball.SetSpeed(-5,0);
+                ball.SetSpeed(-5,ball.GetYVel());
             }
+
+            if (!(ball.GetY() > (CanvasPanel_P7.getCanvasYBorder()) )) {
+                ball.SetSpeed(ball.GetXVel(), 5);
+            }
+
+            if (!(ball.GetY() < (CanvasPanel_P7.getCanvasHeight()))) {
+                ball.SetSpeed(ball.GetXVel(), -5);
+            }
+
+
 
             if (ballOutOfBounds(ball)) {
                 ball.SetPos(CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2);
@@ -150,6 +162,7 @@ public class CanvasPanel_P7 extends JPanel
         int ballXPos = ball.GetX();
         return ballXPos > (CanvasPanel_P7.getCanvasWidth() + 50) || ballXPos < (CanvasPanel_P7.getCanvasXBorder() - 50);
     }
+
 
     public class myActionListener extends KeyAdapter {
         public void keyPressed(KeyEvent e)

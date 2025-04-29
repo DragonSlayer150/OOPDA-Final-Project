@@ -109,6 +109,22 @@ public abstract class Shape2D {
     }
 
     /**
+     * Returns the X Velocity
+     * @return xVel
+     */
+    public int GetXVel() {
+        return xVel;
+    }
+
+    /**
+     * Returns the Y Velocity
+     * @return yVel
+     */
+    public int GetYVel() {
+        return yVel;
+    }
+
+    /**
      * Sets the position of the Shape to the specified coordinates
      * @param xPos - X position to be moved to
      * @param yPos - Y Position to be moved to
