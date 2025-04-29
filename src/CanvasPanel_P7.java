@@ -24,6 +24,11 @@ public class CanvasPanel_P7 extends JPanel
 	private final static int CANVAS_WIDTH = 600;
 	private final static int CANVAS_HEIGHT = 600;
 
+	private final static int TOP_BORDER_YPOS = 70;
+	private final static int BOTTOM_BORDER_YPOS = 600;
+	private final static int LEFT_BORDER_XPOS = 10;
+	private final static int RIGHT_BORDER_XPOS = 640;
+
 
 	List<Shape2D>   shapesList;
 	boolean         action;
@@ -53,9 +58,14 @@ public class CanvasPanel_P7 extends JPanel
 
 		shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
 		shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth() - 25, (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
-		shapesList.add(new Circle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2, 10));
+		shapesList.add(new Circle2D(Shape2D.WHITE, 320, 335, 10));
 
-
+		//Borders
+		shapesList.add(new Rectangle2D(Shape2D.WHITE, 10, 600, 630, 1));//bottom 
+		shapesList.add(new Rectangle2D(Shape2D.WHITE, 10, 70, 630, 1));//top
+		shapesList.add(new Rectangle2D(Shape2D.WHITE, 10, 70, 1, 530)); //left
+		shapesList.add(new Rectangle2D(Shape2D.WHITE, 640, 70 , 1, 530)); //right
+		shapesList.add(new Rectangle2D(Shape2D.WHITE, 325, 70 , 1, 530)); //Middle
 		
 		// Create a render loop
 		// Create a Swing Timer that will tick 30 times a second
@@ -76,7 +86,7 @@ public class CanvasPanel_P7 extends JPanel
 
 			shape = shapesList.get(leftPaddle);//Set shape to leftPaddle to check for input
 			
-			if (LeftPaddleUp && !(shape.GetY() == 0)) {			
+			if (LeftPaddleUp && !(shape.GetY() == TOP_BORDER_YPOS)) {			
 				//if w key pressed and paddle is not at top of frame, move the paddle
 					shape.Move(0, -5);	
 			}else{
@@ -84,7 +94,7 @@ public class CanvasPanel_P7 extends JPanel
 				shape.Move(0, 0);
 			}
 
-			if (LeftPaddleDown && !(shape.GetY() + 150 == CanvasPanel_P7.getCanvasHeight() + 50)) {			
+			if (LeftPaddleDown && !(shape.GetY() + 150 == BOTTOM_BORDER_YPOS)) {			
 				//if s key pressed and paddle is not at bottom of frame, move paddle
 				shape.Move(0, 5);		
 			}else{
@@ -94,7 +104,7 @@ public class CanvasPanel_P7 extends JPanel
 
 
 			shape = shapesList.get(rightPaddle);
-			if (RightPaddleUp && !(shape.GetY() == 0)) {
+			if (RightPaddleUp && !(shape.GetY() == TOP_BORDER_YPOS)) {
 				//if up arrow pressed and paddle is not at top of frame, move the paddle
 				shape.Move(0, -5);		
 			}else{
@@ -105,7 +115,7 @@ public class CanvasPanel_P7 extends JPanel
 
 
 			shape = shapesList.get(1);
-			if (RightPaddleDown && !(shape.GetY() + 150 == CanvasPanel_P7.getCanvasHeight() + 50)) {
+			if (RightPaddleDown && !(shape.GetY() + 150 == BOTTOM_BORDER_YPOS)) {
 				//if down arrow pressed and paddle is not at bottom of frame, move paddle
 				shape.Move(0, 5);		
 			}else{
