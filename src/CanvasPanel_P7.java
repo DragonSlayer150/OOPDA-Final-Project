@@ -41,6 +41,9 @@ public class CanvasPanel_P7 extends JPanel {
     private boolean RightPaddleUp;
     private boolean RightPaddleDown;
 
+    private boolean p1Shrink;
+    private boolean p1Reset;
+
 
     public CanvasPanel_P7() {
         shapesList = new ArrayList<>();
@@ -139,11 +142,19 @@ public class CanvasPanel_P7 extends JPanel {
 
             if (ballOutOfBounds(ball)) {
                 action = false;
-                ball.SetPos(CanvasPanel_P7.getCanvasWidth() / 2, CanvasPanel_P7.getCanvasHeight() / 2);
+                ball.SetPos(315, 335);
             }
             ball.Animate();
 
-
+            if(p1Shrink) {
+				shrinkPaddle(rightPaddle);
+				p1Shrink = false;
+			}
+			
+			if(p1Reset) {
+				resetPaddle(leftPaddle);
+				p1Reset = false;
+			}
 
         }
     }
@@ -220,6 +231,12 @@ public class CanvasPanel_P7 extends JPanel {
                 case KeyEvent.VK_SPACE:
                     action = false;
                     break;
+                case KeyEvent.VK_Z:
+                	p1Shrink = true;
+                	break;
+                case KeyEvent.VK_X:
+                	p1Reset = true;
+                	break;
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
@@ -242,4 +259,12 @@ public class CanvasPanel_P7 extends JPanel {
             }
         }
     }
+
+     public static void shrinkPaddle(Rectangle2D paddle) {
+		paddle.SetHeight(paddle.GetHeight()-30);
+	}
+	
+	public static void resetPaddle(Rectangle2D paddle) {
+		paddle.SetHeight(150);
+	}
 }
