@@ -43,6 +43,8 @@ public class CanvasPanel_P7 extends JPanel {
 
     private boolean p1Shrink;
     private boolean p1Reset;
+    private boolean gameReset;
+    private boolean gameOver;
 
 	private static int p1Score = 0;
     private static int p2Score = 0;
@@ -56,7 +58,7 @@ public class CanvasPanel_P7 extends JPanel {
         System.out.println("keyboard event registered");
 
         shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
-        shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth() - 25, (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
+        shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
         shapesList.add(new Circle2D(Shape2D.WHITE, 320, 335, 10));
 
         //Borders
@@ -66,9 +68,10 @@ public class CanvasPanel_P7 extends JPanel {
         shapesList.add(new Rectangle2D(Shape2D.WHITE, 640, 70, 1, 530)); //right
         shapesList.add(new Rectangle2D(Shape2D.WHITE, 325, 70, 1, 530)); //Middle
 
+        gameOver = false;
+        gameReset = false;
 
-
-        shapesList.get(BALL).SetSpeed(5, 5);
+        shapesList.get(BALL).SetSpeed(5, 3);
         // Create a render loop
         // Create a Swing Timer that will tick 30 times a second
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
@@ -81,11 +84,10 @@ public class CanvasPanel_P7 extends JPanel {
     }
 
     public void Simulate() {
+        Circle2D ball = (Circle2D) shapesList.get(BALL);
+        Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(LEFT_PADDLE);
+        Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(RIGHT_PADDLE);
         if (action) {
-            Circle2D ball = (Circle2D) shapesList.get(BALL);
-            Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(LEFT_PADDLE);
-            Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(RIGHT_PADDLE);
-
 
             if (LeftPaddleUp && !(leftPaddle.GetY() == TOP_BORDER_YPOS)) {
                 //if w key pressed and paddle is not at top of frame, move the paddle
@@ -111,12 +113,10 @@ public class CanvasPanel_P7 extends JPanel {
                 rightPaddle.Animate();
             } else {
                 //stop paddle movement when key is released
-
                 rightPaddle.SetSpeed(0, 0);
             }
 
-
-            if (RightPaddleDown && !(rightPaddle.GetY() + leftPaddle.GetHeight() == BOTTOM_BORDER_YPOS)) {
+            if (RightPaddleDown && !(rightPaddle.GetY() + rightPaddle.GetHeight() == BOTTOM_BORDER_YPOS)) {
                 //if down arrow pressed and paddle is not at bottom of frame, move paddle
                 rightPaddle.SetSpeed(0, 5);
                 rightPaddle.Animate();
@@ -144,7 +144,7 @@ public class CanvasPanel_P7 extends JPanel {
 
             if (ballOutOfBounds(ball)) {
                 action = false;
-		if(ball.GetX() > RIGHT_BORDER_XPOS) {
+		        if(ball.GetX() > RIGHT_BORDER_XPOS) {
                 	p1Score++;
                 	shrinkPaddle(rightPaddle);
                 }
@@ -153,10 +153,15 @@ public class CanvasPanel_P7 extends JPanel {
                 	shrinkPaddle(leftPaddle);
                 }
                 ball.SetPos(315, 335);
-		leftPaddle.SetPos(CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2));
+		        leftPaddle.SetPos(CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2));
                 rightPaddle.SetPos(CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2));
             }
-            ball.Animate();
+
+            if (leftPaddle.GetHeight() <= 0 || rightPaddle.GetHeight() <= 0) {
+                gameOver = true;
+
+            }
+
 
             if(p1Shrink) {
 				shrinkPaddle(rightPaddle);
@@ -168,6 +173,24 @@ public class CanvasPanel_P7 extends JPanel {
 				p1Reset = false;
 			}
 
+
+
+            ball.Animate();
+
+        }
+        if (gameReset) {
+            action = false;
+            p1Score = 0;
+            p2Score = 0;
+            resetPaddle(leftPaddle);
+            resetPaddle(rightPaddle);
+            leftPaddle.SetPos(CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2));
+            rightPaddle.SetPos(CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2));
+            ball.SetPos(315, 335);
+
+            gameOver = false;
+            gameReset = false;
+            action = true;
         }
     }
 
@@ -188,7 +211,16 @@ public class CanvasPanel_P7 extends JPanel {
         // Display frame number
         g.setColor(Color.white);
         g.setFont(new Font("Consolas", Font.PLAIN, 30));
-        g.drawString(Integer.toString(frameNumber), 300, 70);
+        //g.drawString(Integer.toString(frameNumber), 300, 70);
+        g.drawString(Integer.toString(p1Score), 150, 70);
+        g.drawString(Integer.toString(p2Score), 450, 70);
+
+        if (gameOver) {
+            g.setFont(new Font("Consolas", Font.BOLD, 50));
+            g.drawString("Game Over", 200, 300);
+            g.setFont(new Font("Consolas", Font.PLAIN, 30));
+            g.drawString("Press R to Start Over", 150, 350);
+        }
 
         // Render all the shapes in the shapes list
         for (Shape2D shape : shapesList) {
@@ -249,6 +281,12 @@ public class CanvasPanel_P7 extends JPanel {
                 case KeyEvent.VK_X:
                 	p1Reset = true;
                 	break;
+                case KeyEvent.VK_R:
+                    gameReset = true;
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    gameOver = true;
+                    break;
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
