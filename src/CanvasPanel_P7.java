@@ -44,6 +44,8 @@ public class CanvasPanel_P7 extends JPanel {
     private boolean p1Shrink;
     private boolean p1Reset;
 
+	private static int p1Score = 0;
+    private static int p2Score = 0;
 
     public CanvasPanel_P7() {
         shapesList = new ArrayList<>();
@@ -142,7 +144,17 @@ public class CanvasPanel_P7 extends JPanel {
 
             if (ballOutOfBounds(ball)) {
                 action = false;
+		if(ball.GetX() > RIGHT_BORDER_XPOS) {
+                	p1Score++;
+                	shrinkPaddle(rightPaddle);
+                }
+                else if(ball.GetX() < LEFT_BORDER_XPOS) {
+                	p2Score++;
+                	shrinkPaddle(leftPaddle);
+                }
                 ball.SetPos(315, 335);
+		leftPaddle.SetPos(CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2));
+                rightPaddle.SetPos(CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2));
             }
             ball.Animate();
 
@@ -203,7 +215,7 @@ public class CanvasPanel_P7 extends JPanel {
 
     private static boolean ballOutOfBounds(Circle2D ball) {
         int ballXPos = ball.GetX();
-        return ballXPos > CanvasPanel_P7.getCanvasWidth() || ballXPos < CanvasPanel_P7.getCanvasXBorder();
+        return ballXPos > RIGHT_BORDER_XPOS || ballXPos < LEFT_BORDER_XPOS;
     }
 
 
