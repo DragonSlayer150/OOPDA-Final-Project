@@ -45,6 +45,8 @@ public class CanvasPanel_P7 extends JPanel {
     private boolean p1Reset;
     private boolean gameReset;
     private boolean gameOver;
+    private boolean botActive;
+
 
 	private static int p1Score = 0;
     private static int p2Score = 0;
@@ -87,6 +89,7 @@ public class CanvasPanel_P7 extends JPanel {
         Circle2D ball = (Circle2D) shapesList.get(BALL);
         Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(LEFT_PADDLE);
         Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(RIGHT_PADDLE);
+	Bot paddleBot = new Bot(rightPaddle, ball);
         if (action) {
 
             if (LeftPaddleUp && !(leftPaddle.GetY() == TOP_BORDER_YPOS)) {
@@ -173,7 +176,9 @@ public class CanvasPanel_P7 extends JPanel {
 				p1Reset = false;
 			}
 
-
+	    if(botActive) {
+	    	paddleBot.botMove();
+	    }
 
             ball.Animate();
 
@@ -287,6 +292,13 @@ public class CanvasPanel_P7 extends JPanel {
                 case KeyEvent.VK_ESCAPE:
                     gameOver = true;
                     break;
+		case KeyEvent.VK_B:
+                	if(!botActive) {
+                		botActive = true;
+                	}
+                	else
+                		botActive = false;
+                	break;
                 default:
                     System.out.println("press some other key besides the arrow keys");
             }
