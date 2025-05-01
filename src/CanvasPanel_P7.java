@@ -213,7 +213,7 @@ public class CanvasPanel_P7 extends JPanel {
         g.setFont(new Font("Consolas", Font.PLAIN, 30));
         //g.drawString(Integer.toString(frameNumber), 300, 70);
         g.drawString(Integer.toString(p1Score), 150, 70);
-        g.drawString(Integer.toString(p2Score), 450, 70);
+        g.drawString(Integer.toString(p2Score), 450, 70);   
 
         if (gameOver) {
             g.setFont(new Font("Consolas", Font.BOLD, 50));
@@ -272,20 +272,11 @@ public class CanvasPanel_P7 extends JPanel {
                 case KeyEvent.VK_A:
                     action = true;
                     break;
-                case KeyEvent.VK_SPACE:
+                case KeyEvent.VK_ESCAPE:
                     action = false;
                     break;
-                case KeyEvent.VK_Z:
-                	p1Shrink = true;
-                	break;
-                case KeyEvent.VK_X:
-                	p1Reset = true;
-                	break;
                 case KeyEvent.VK_R:
                     gameReset = true;
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    gameOver = true;
                     break;
                 default:
                     System.out.println("press some other key besides the arrow keys");
