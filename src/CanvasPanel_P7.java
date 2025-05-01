@@ -89,7 +89,7 @@ public class CanvasPanel_P7 extends JPanel {
         Circle2D ball = (Circle2D) shapesList.get(BALL);
         Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(LEFT_PADDLE);
         Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(RIGHT_PADDLE);
-	Bot paddleBot = new Bot(rightPaddle, ball);
+	    Bot paddleBot = new Bot(rightPaddle, ball);
         if (action) {
 
             if (LeftPaddleUp && !(leftPaddle.GetY() == TOP_BORDER_YPOS)) {
@@ -284,7 +284,7 @@ public class CanvasPanel_P7 extends JPanel {
                     gameReset = true;
                     break;           
 		            case KeyEvent.VK_B:
-                	 botActive = !botActive
+                	 botActive = !botActive;
                 	break;
 
                 default:

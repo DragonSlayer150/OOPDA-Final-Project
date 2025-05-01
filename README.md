@@ -8,6 +8,7 @@ Right Paddle - Up: Up Arrow, Down: Down Arrow
   
 Start Game: A  
 Pause Game: Esc  
+Activate Bot: B  
 Reset: R  
 
 
