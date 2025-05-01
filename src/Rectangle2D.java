@@ -40,6 +40,10 @@ public class Rectangle2D extends Shape2D{
         return height;
     }
 
+    public void SetHeight(int height) {
+    	this.height = height;
+    }
+    
     public boolean paddleCollision(Shape2D circle) {
         Circle2D ball = (Circle2D) circle;
 
