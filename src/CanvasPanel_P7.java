@@ -46,7 +46,7 @@ public class CanvasPanel_P7 extends JPanel {
     private boolean gameReset;
     private boolean gameOver;
     private boolean botActive;
-
+    private Thread hitSound;
 
 	private static int p1Score = 0;
     private static int p2Score = 0;
@@ -90,6 +90,9 @@ public class CanvasPanel_P7 extends JPanel {
         Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(LEFT_PADDLE);
         Rectangle2D rightPaddle = (Rectangle2D) shapesList.get(RIGHT_PADDLE);
 	    Bot paddleBot = new Bot(rightPaddle, ball);
+
+
+
         if (action) {
 
             if (LeftPaddleUp && !(leftPaddle.GetY() == TOP_BORDER_YPOS)) {
@@ -130,11 +133,14 @@ public class CanvasPanel_P7 extends JPanel {
 
             if (leftPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(5, ball.GetYVel() + leftPaddle.GetYVel());
+                hitSound = new Thread(new AudioPlayer("C:\\Users\\rjkee\\OneDrive\\Documents\\CodeProjects\\OOPDA\\FinalProject\\src\\pong_hit.wav"));
+                hitSound.start();
             }
 
             if (rightPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(-5, (ball.GetYVel() + rightPaddle.GetYVel()));
-
+                hitSound = new Thread(new AudioPlayer("C:\\Users\\rjkee\\OneDrive\\Documents\\CodeProjects\\OOPDA\\FinalProject\\src\\pong_hit.wav"));
+                hitSound.start();
             }
 
             if (!(ball.GetY() > TOP_BORDER_YPOS)) {
