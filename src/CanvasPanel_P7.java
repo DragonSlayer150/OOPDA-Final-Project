@@ -133,13 +133,13 @@ public class CanvasPanel_P7 extends JPanel {
 
             if (leftPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(5, ball.GetYVel() + leftPaddle.GetYVel());
-                hitSound = new Thread(new AudioPlayer("C:\\Users\\rjkee\\OneDrive\\Documents\\CodeProjects\\OOPDA\\FinalProject\\src\\pong_hit.wav"));
+                hitSound = new Thread(new AudioPlayer("pong_hit.wav"));
                 hitSound.start();
             }
 
             if (rightPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(-5, (ball.GetYVel() + rightPaddle.GetYVel()));
-                hitSound = new Thread(new AudioPlayer("C:\\Users\\rjkee\\OneDrive\\Documents\\CodeProjects\\OOPDA\\FinalProject\\src\\pong_hit.wav"));
+                hitSound = new Thread(new AudioPlayer("pong_hit.wav"));
                 hitSound.start();
             }
 
