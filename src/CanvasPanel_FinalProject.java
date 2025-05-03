@@ -23,7 +23,6 @@ public class CanvasPanel_FinalProject extends JPanel {
     private final static int LEFT_BORDER_XPOS = 10;
     private final static int RIGHT_BORDER_XPOS = 640;
 
-
     List<Shape2D> shapesList;
     boolean action;
     private boolean jumpUp;    // for Sprite
@@ -190,7 +189,6 @@ public class CanvasPanel_FinalProject extends JPanel {
 
             gameOver = false;
             gameReset = false;
-            action = true;
         }
     }
 
@@ -214,6 +212,11 @@ public class CanvasPanel_FinalProject extends JPanel {
         //g.drawString(Integer.toString(frameNumber), 300, 70);
         g.drawString(Integer.toString(p1Score), 150, 70);
         g.drawString(Integer.toString(p2Score), 450, 70);   
+
+        if (!action) {
+            g.setFont(new Font("Consolas", Font.PLAIN, 20));
+            g.drawString("Press A to Start", 230, 50);
+        }
 
         if (gameOver) {
             g.setFont(new Font("Consolas", Font.BOLD, 50));
