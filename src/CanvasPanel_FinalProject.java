@@ -3,8 +3,8 @@
  * 2D CanvasPanel
  * 
  *
- * @author (Prof R)
- * @version (v1.0 11-17-22)
+ * @author (Ryan Kee and Alberto Rodriguez)
+ * @version (v1.0 5-2-25)
  */
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class CanvasPanel_P7 extends JPanel {
+public class CanvasPanel_FinalProject extends JPanel {
     private final static int X_CORNER = 25;
     private final static int Y_CORNER = 25;
     private final static int CANVAS_WIDTH = 600;
@@ -51,7 +51,7 @@ public class CanvasPanel_P7 extends JPanel {
 	private static int p1Score = 0;
     private static int p2Score = 0;
 
-    public CanvasPanel_P7() {
+    public CanvasPanel_FinalProject() {
         shapesList = new ArrayList<>();
 
         // Callback from keyboard events
@@ -59,8 +59,8 @@ public class CanvasPanel_P7 extends JPanel {
         this.addKeyListener(new myActionListener());
         System.out.println("keyboard event registered");
 
-        shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
-        shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2), 25, 150));
+        shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_FinalProject.getCanvasXBorder(), (CanvasPanel_FinalProject.getCanvasHeight() / 2), 25, 150));
+        shapesList.add(new Rectangle2D(Shape2D.WHITE, CanvasPanel_FinalProject.getCanvasWidth(), (CanvasPanel_FinalProject.getCanvasHeight() / 2), 25, 150));
         shapesList.add(new Circle2D(Shape2D.WHITE, 320, 335, 10));
 
         //Borders
@@ -133,13 +133,13 @@ public class CanvasPanel_P7 extends JPanel {
 
             if (leftPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(5, ball.GetYVel() + leftPaddle.GetYVel());
-                hitSound = new Thread(new AudioPlayer("pong_hit.wav"));
+                hitSound = new Thread(new AudioPlayer("C:\\Users\\rjkee\\OneDrive\\Documents\\CodeProjects\\OOPDA\\FinalProject\\src\\pong_hit.wav"));
                 hitSound.start();
             }
 
             if (rightPaddle.paddleCollision(ball)) {
                 ball.SetSpeed(-5, (ball.GetYVel() + rightPaddle.GetYVel()));
-                hitSound = new Thread(new AudioPlayer("pong_hit.wav"));
+                hitSound = new Thread(new AudioPlayer("C:\\Users\\rjkee\\OneDrive\\Documents\\CodeProjects\\OOPDA\\FinalProject\\src\\pong_hit.wav"));
                 hitSound.start();
             }
 
@@ -162,8 +162,8 @@ public class CanvasPanel_P7 extends JPanel {
                 	shrinkPaddle(leftPaddle);
                 }
                 ball.SetPos(315, 335);
-		        leftPaddle.SetPos(CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2));
-                rightPaddle.SetPos(CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2));
+		        leftPaddle.SetPos(CanvasPanel_FinalProject.getCanvasXBorder(), (CanvasPanel_FinalProject.getCanvasHeight() / 2));
+                rightPaddle.SetPos(CanvasPanel_FinalProject.getCanvasWidth(), (CanvasPanel_FinalProject.getCanvasHeight() / 2));
             }
 
             if (leftPaddle.GetHeight() <= 0 || rightPaddle.GetHeight() <= 0) {
@@ -172,31 +172,20 @@ public class CanvasPanel_P7 extends JPanel {
             }
 
 
-            if(p1Shrink) {
-				shrinkPaddle(rightPaddle);
-				p1Shrink = false;
-			}
-			
-			if(p1Reset) {
-				resetPaddle(leftPaddle);
-				p1Reset = false;
-			}
-
 	    if(botActive) {
 	    	paddleBot.botMove();
 	    }
-
             ball.Animate();
-
         }
+
         if (gameReset) {
             action = false;
             p1Score = 0;
             p2Score = 0;
             resetPaddle(leftPaddle);
             resetPaddle(rightPaddle);
-            leftPaddle.SetPos(CanvasPanel_P7.getCanvasXBorder(), (CanvasPanel_P7.getCanvasHeight() / 2));
-            rightPaddle.SetPos(CanvasPanel_P7.getCanvasWidth(), (CanvasPanel_P7.getCanvasHeight() / 2));
+            leftPaddle.SetPos(CanvasPanel_FinalProject.getCanvasXBorder(), (CanvasPanel_FinalProject.getCanvasHeight() / 2));
+            rightPaddle.SetPos(CanvasPanel_FinalProject.getCanvasWidth(), (CanvasPanel_FinalProject.getCanvasHeight() / 2));
             ball.SetPos(315, 335);
 
             gameOver = false;
@@ -256,11 +245,31 @@ public class CanvasPanel_P7 extends JPanel {
         return Y_CORNER;
     }
 
+    /**
+     * Tests if the ball has gone out of bounds
+     * @param ball - the ball to be tested
+     * @return isOutOfBounds
+     */
     private static boolean ballOutOfBounds(Circle2D ball) {
         int ballXPos = ball.GetX();
         return ballXPos > RIGHT_BORDER_XPOS || ballXPos < LEFT_BORDER_XPOS;
     }
 
+    /**
+     * Shrinks the height of the paddle
+     * @param paddle - the paddle to be shrank
+     */
+    public static void shrinkPaddle(Rectangle2D paddle) {
+        paddle.SetHeight(paddle.GetHeight()-30);
+    }
+
+    /**
+     * Resets the height of the paddle
+     * @param paddle - the paddle to be reset
+     */
+    public static void resetPaddle(Rectangle2D paddle) {
+        paddle.SetHeight(150);
+    }
 
     public class myActionListener extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
@@ -294,7 +303,7 @@ public class CanvasPanel_P7 extends JPanel {
                 	break;
 
                 default:
-                    System.out.println("press some other key besides the arrow keys");
+
             }
         }
 
@@ -316,11 +325,4 @@ public class CanvasPanel_P7 extends JPanel {
         }
     }
 
-     public static void shrinkPaddle(Rectangle2D paddle) {
-		paddle.SetHeight(paddle.GetHeight()-30);
-	}
-	
-	public static void resetPaddle(Rectangle2D paddle) {
-		paddle.SetHeight(150);
-	}
 }

@@ -4,10 +4,10 @@
  * 
  * This is a framework for an interactive 2D graphics event based program
  *
- * @author (Ryan Kee)
+ * @author (Ryan Kee and Alberto Rodriguez)
  * @version (version 1.0, 4-10-2025)
  */
-public class Project6_Driver
+public class FinalProject_Driver
 {
    public static void main(String[] args) {
 
@@ -15,6 +15,6 @@ public class Project6_Driver
    }
    
    public static void P1() {
-       new CanvasFrame_P7();  // construct the window, which will construct a frame (window), and a panel(canvas)
+       new CanvasFrame_FinalProject();  // construct the window, which will construct a frame (window), and a panel(canvas)
    }
 }

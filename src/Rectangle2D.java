@@ -33,9 +33,18 @@ public class Rectangle2D extends Shape2D{
         this.width = width;
     }
 
+    /**
+     * Returns the width of the rectangle
+     * @return width
+     */
     public int GetWidth() {
         return width;
     }
+
+    /**
+     * Returns the height of the rectangle
+     * @return height
+     */
     public int GetHeight() {
         return height;
     }
@@ -43,7 +52,12 @@ public class Rectangle2D extends Shape2D{
     public void SetHeight(int height) {
     	this.height = height;
     }
-    
+
+    /**
+     * Detects if the circle has collided with the paddle
+     * @param circle - the ball to be detected
+     * @return hasCollided - Whether or not the ball has collided with the paddle yet
+     */
     public boolean paddleCollision(Shape2D circle) {
         Circle2D ball = (Circle2D) circle;
 
