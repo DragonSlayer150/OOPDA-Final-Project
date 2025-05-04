@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * Rectangle2D Shape
  *
- * @author (Ryan Kee)
+ * @author (Ryan Kee and Alberto Rodriguez)
  * @version (v1.0 4-14-25)
  */
 public class Rectangle2D extends Shape2D{

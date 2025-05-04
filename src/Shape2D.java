@@ -2,7 +2,7 @@ import java.awt.*;
 /**
  * Shape2D Class
  *
- * @author (Ryan Kee)
+ * @author (Ryan Kee and Alberto Rodriguez)
  * @version (v1.0 4-14-25)
  */
 public abstract class Shape2D {

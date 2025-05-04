@@ -2,7 +2,7 @@
  * 2D Frame for 2D Graphics
  * 
  *
- * @author (Ryan Kee)
+ * @author (Ryan Kee and Alberto Rodriguez)
  * @version (v1.0 4-14-25)
  */
 import javax.swing.*;

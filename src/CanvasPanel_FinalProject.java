@@ -77,6 +77,9 @@ public class CanvasPanel_FinalProject extends JPanel {
         renderLoop.start();
     }
 
+    /**
+     * The simulation loop to be ran every 30 ms
+     */
     public void Simulate() {
         Circle2D ball = (Circle2D) shapesList.get(BALL);
         Rectangle2D leftPaddle = (Rectangle2D) shapesList.get(LEFT_PADDLE);
@@ -185,7 +188,10 @@ public class CanvasPanel_FinalProject extends JPanel {
         }
     }
 
-    // This method is called by renderloop
+    /**
+     * The things to be painted to the screen every 30 ms
+     * @param g the <code>Graphics</code> object to protect
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
@@ -224,19 +230,34 @@ public class CanvasPanel_FinalProject extends JPanel {
         }
     }
 
-
+    /**
+     * Returns the canvas width
+     * @return CANVAS_WIDTH
+     */
     public static int getCanvasWidth() {
         return CANVAS_WIDTH;
     }
 
+    /**
+     * Returns the canvas height
+     * @return CANVAS_HEIGHT
+     */
     public static int getCanvasHeight() {
         return CANVAS_HEIGHT;
     }
 
+    /**
+     * Returns the Canvas X border
+     * @return X_CORNER
+     */
     public static int getCanvasXBorder() {
         return X_CORNER;
     }
 
+    /**
+     * Returns the canvas Y border
+     * @return Y_CORNER
+     */
     public static int getCanvasYBorder() {
         return Y_CORNER;
     }

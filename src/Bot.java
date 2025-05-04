@@ -2,7 +2,7 @@
  * Paddle Bot
  *
  *
- * @author (Alberto Rodriguez)
+ * @author (Ryan Kee and Alberto Rodriguez)
  * @version (v1.0 5-1-25)
  */
 public class Bot {

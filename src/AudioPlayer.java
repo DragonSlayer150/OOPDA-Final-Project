@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * Audio Player runnable that can play the sound given
  *
- * @author Ryan Kee
+ * @author Ryan Kee and Alberto Rogriguez
  * @version 4-9-2025 1.0.0
  */
 public class AudioPlayer implements Runnable{

@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * Circle2D Shape
  *
- * @author (Ryan Kee)
+ * @author (Ryan Kee and Alberto Rodriguez)
  * @version (v1.0 4-14-25)
  */
 public class Circle2D extends Shape2D {
@@ -25,6 +25,10 @@ public class Circle2D extends Shape2D {
         this.diameter       = diameter;
     }
 
+    /**
+     * Returns the diameter of the circle
+     * @return diameter
+     */
     public int GetDiameter() {
         return diameter;
     }
