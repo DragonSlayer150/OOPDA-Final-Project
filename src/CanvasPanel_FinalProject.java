@@ -25,10 +25,6 @@ public class CanvasPanel_FinalProject extends JPanel {
 
     List<Shape2D> shapesList;
     boolean action;
-    private boolean jumpUp;    // for Sprite
-    private boolean fallDown;  // for Sprite
-    private int frameNumber;
-    private int time;
 
     private final int LEFT_PADDLE = 0;
     private final int RIGHT_PADDLE = 1;
@@ -40,8 +36,6 @@ public class CanvasPanel_FinalProject extends JPanel {
     private boolean RightPaddleUp;
     private boolean RightPaddleDown;
 
-    private boolean p1Shrink;
-    private boolean p1Reset;
     private boolean gameReset;
     private boolean gameOver;
     private boolean botActive;
@@ -77,7 +71,6 @@ public class CanvasPanel_FinalProject extends JPanel {
         // Create a Swing Timer that will tick 30 times a second
         // At each tick the ActionListener that was registered via the lambda expression will be invoked
         Timer renderLoop = new Timer(30, (ActionEvent ev) -> {
-            frameNumber++;
             Simulate();
             repaint();
         }); // lambda expression for ActionListener implements actionPerformed
@@ -262,7 +255,7 @@ public class CanvasPanel_FinalProject extends JPanel {
      * Shrinks the height of the paddle
      * @param paddle - the paddle to be shrank
      */
-    public static void shrinkPaddle(Rectangle2D paddle) {
+    private static void shrinkPaddle(Rectangle2D paddle) {
         paddle.SetHeight(paddle.GetHeight()-30);
     }
 
@@ -270,7 +263,7 @@ public class CanvasPanel_FinalProject extends JPanel {
      * Resets the height of the paddle
      * @param paddle - the paddle to be reset
      */
-    public static void resetPaddle(Rectangle2D paddle) {
+    private static void resetPaddle(Rectangle2D paddle) {
         paddle.SetHeight(150);
     }
 
